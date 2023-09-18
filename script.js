@@ -12,12 +12,6 @@ document.onmousemove = function(e) {
     console.log("Coordinate 1: " + x1 + " og " + y1)
     console.log("Coordinate 2: " + x2 + " og " + y2)
 
-    const dx = x2 - x1;
-    const dy = y2 - y1;
-    const angle = Math.atan2(dy, dx);
-    let targetAngle = (angle * 180) / Math.PI;
-
-    document.getElementById("player").style.rotate = (targetAngle) + "deg";
     document.getElementById("player").style.left = (x2 - 50) + "px";
     document.getElementById("player").style.top = (y2 - 50) + "px";
 
