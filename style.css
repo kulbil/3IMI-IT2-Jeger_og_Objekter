@@ -35,5 +35,14 @@ body {
 
 
 #player {
+    aspect-ratio: 1/1;
+    width: 100px;
     position: absolute;
+}
+
+.opening {
+    height: 3vh;
+    width: 15vw;
+    position: absolute;
+    top: 48.25vh;
 }
