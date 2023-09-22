@@ -14,12 +14,10 @@ $("#screenSplits").append(openingCon);
 
 let opening = document.getElementsByClassName("opening")[0];
 
-/*
+
 document.onmousemove = function(e) { 
-    x1 = x2; 
-    y1 = y2;
-    x2 = e.clientX; 
-    y2 = e.clientY; 
+    x = e.clientX; 
+    y = e.clientY; 
 
 
     const playerRect = player.getBoundingClientRect()
@@ -41,12 +39,16 @@ document.onmousemove = function(e) {
     ) 
 
     
-    console.log("Coordinate 1: " + x1 + " og " + y1)
-    console.log("Coordinate 2: " + x2 + " og " + y2)
+    console.log("Coordinate: " + x + " og " + y)
     
     
-    if (wallOverlap) {
-
+    if (y > $(window).height()) {
+        console.log("under");
+        player.style.left = (x - 50) + "px";
+        player.style.top = ($(window).height() + "px")
+    } else if (y < $(window).height()/2) {
+        console.log("top")
+        updatePosition();
     }
 
     /*
@@ -55,17 +57,19 @@ document.onmousemove = function(e) {
     if (e.clientY > (screen.height/2 - 100) && openingOverlap) {
         document.getElementById("player").style.top = (screen.height/2 - screen.height%98.5 - 100) + "px";
     }
-
+    */
     
 };
 
-*/
+
+console.log($(window).height()/2)
 
 function updatePosition() {
-    player.style.left = x + "px";
-    player.style.top = y + "px";
+    player.style.left = (x - 50) + "px";
+    player.style.top = (y - 50) + "px";
 }
 
+/*
 document.addEventListener("keydown", (e) => {
     switch (e.key) {
         case "ArrowUp":
@@ -84,7 +88,7 @@ document.addEventListener("keydown", (e) => {
     updatePosition();
 });
 
-
+*/
 
 
 
