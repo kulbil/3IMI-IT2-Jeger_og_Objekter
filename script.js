@@ -48,9 +48,11 @@ document.onmousemove = function(e) {
     player.style.top = (y2 - 50) + "px";
     
 
-    if (wallOverlap && !openingOverlap) {
+    if (wallOverlap) {
         console.log(player.offsetTop);
-        player.style.top = (screen.height/2 - screen.height%98.5 - 500) + "px";
+        const currentPosition = parseInt(player.style.top);
+        console.log(currentPosition)
+        player.style.top = currentPosition + 1 + 'px';
     }
 
     /*
