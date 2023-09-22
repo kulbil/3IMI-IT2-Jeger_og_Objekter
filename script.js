@@ -1,7 +1,6 @@
-let x1 = 0; 
-let y1 = 0; 
-let x2 = 0; 
-let y2 = 0;
+let x = 0; 
+let y = 0; 
+
 var player = document.getElementById("player")
 let wall = document.getElementById("middlePart")
 
@@ -15,6 +14,7 @@ $("#screenSplits").append(openingCon);
 
 let opening = document.getElementsByClassName("opening")[0];
 
+/*
 document.onmousemove = function(e) { 
     x1 = x2; 
     y1 = y2;
@@ -40,19 +40,13 @@ document.onmousemove = function(e) {
         playerRect.top > wallReact.bottom
     ) 
 
-    /**
+    
     console.log("Coordinate 1: " + x1 + " og " + y1)
     console.log("Coordinate 2: " + x2 + " og " + y2)
-    **/
-    player.style.left = (x2 - 50) + "px";
-    player.style.top = (y2 - 50) + "px";
     
-
+    
     if (wallOverlap) {
-        console.log(player.offsetTop);
-        const currentPosition = parseInt(player.style.top);
-        console.log(currentPosition)
-        player.style.top = currentPosition + 1 + 'px';
+
     }
 
     /*
@@ -62,9 +56,33 @@ document.onmousemove = function(e) {
         document.getElementById("player").style.top = (screen.height/2 - screen.height%98.5 - 100) + "px";
     }
 
-    */
+    
 };
 
+*/
+
+function updatePosition() {
+    player.style.left = x + "px";
+    player.style.top = y + "px";
+}
+
+document.addEventListener("keydown", (e) => {
+    switch (e.key) {
+        case "ArrowUp":
+            y -= 10;
+            break;
+        case "ArrowDown":
+            y += 10;
+            break;
+        case "ArrowLeft":
+            x -= 10;
+            break;
+        case "ArrowRight":
+            x += 10;
+            break;
+    }
+    updatePosition();
+});
 
 
 
