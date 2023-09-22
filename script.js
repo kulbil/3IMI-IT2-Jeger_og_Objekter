@@ -46,18 +46,18 @@ document.onmousemove = function(e) {
     if(openingOverlap && !passing) {
         console.log("passing");
         passing = true;
-        if (y > $(window).height/2) {
-            currentScreen = "bottom"
-        } else if (y < $(window).height/2){
-            currentScreen = "top"
-        }
-        console.log(currentScreen)
+        
     } else if (!openingOverlap && passing) {
         console.log("Not passing")
         passing = false;
-
+        if (currentScreen == "top" && y > ($(window).height()/2)) {
+            currentScreen = "bottom";
+        } else if (currentScreen == "bottom" && y < ($(window).height()/2)) {
+            currentScreen = "top";
+        }
         console.log(currentScreen)
     }
+
 
     /*
     if (y > $(window).height()/2) {
