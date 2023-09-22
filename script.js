@@ -14,6 +14,8 @@ $("#screenSplits").append(openingCon);
 
 let opening = document.getElementsByClassName("opening")[0];
 
+let currentScreen = "top";
+let passing = false;
 
 document.onmousemove = function(e) { 
     x = e.clientX; 
@@ -39,26 +41,36 @@ document.onmousemove = function(e) {
     ) 
 
     
-    console.log("Coordinate: " + x + " og " + y)
+    //console.log("Coordinate: " + x + " og " + y + " og " + $(window).height())
     
-    
-    if (y > $(window).height()) {
-        console.log("under");
-        player.style.left = (x - 50) + "px";
-        player.style.top = ($(window).height() + "px")
-    } else if (y < $(window).height()/2) {
-        console.log("top")
-        updatePosition();
+    if(openingOverlap && !passing) {
+        console.log("passing");
+        passing = true;
+        if (y > $(window).height/2) {
+            currentScreen = "bottom"
+        } else if (y < $(window).height/2){
+            currentScreen = "top"
+        }
+        console.log(currentScreen)
+    } else if (!openingOverlap && passing) {
+        console.log("Not passing")
+        passing = false;
+
+        console.log(currentScreen)
     }
 
     /*
-    //player.style.top = (screen.height/2 - screen.height%98.5 - 200) + "px";
-    
-    if (e.clientY > (screen.height/2 - 100) && openingOverlap) {
-        document.getElementById("player").style.top = (screen.height/2 - screen.height%98.5 - 100) + "px";
+    if (y > $(window).height()/2) {
+        //console.log("under");
+        player.style.left = (x - 50) + "px";
+        player.style.top = ($(window).height()/2 - 50) + "px";
+        //player.style.top = ($(window).height() + "px")
+    } else if (y < $(window).height()/2) {
+        //console.log("top")
+        updatePosition();
     }
-    */
-    
+*/
+updatePosition();  
 };
 
 
@@ -69,26 +81,7 @@ function updatePosition() {
     player.style.top = (y - 50) + "px";
 }
 
-/*
-document.addEventListener("keydown", (e) => {
-    switch (e.key) {
-        case "ArrowUp":
-            y -= 10;
-            break;
-        case "ArrowDown":
-            y += 10;
-            break;
-        case "ArrowLeft":
-            x -= 10;
-            break;
-        case "ArrowRight":
-            x += 10;
-            break;
-    }
-    updatePosition();
-});
 
-*/
 
 
 
