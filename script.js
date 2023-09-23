@@ -24,7 +24,6 @@ document.onmousemove = function(e) {
 
     const playerRect = player.getBoundingClientRect()
     const openingRect = opening.getBoundingClientRect()
-    const wallReact = wall.getBoundingClientRect()
 
     const openingOverlap = !(
         playerRect.right < openingRect.left ||
@@ -32,16 +31,6 @@ document.onmousemove = function(e) {
         playerRect.bottom < openingRect.top ||
         playerRect.top > openingRect.bottom
     ) 
-
-    const wallOverlap = !(
-        playerRect.right < wallReact.left ||
-        playerRect.left > wallReact.right ||
-        playerRect.bottom < wallReact.top ||
-        playerRect.top > wallReact.bottom
-    ) 
-
-    
-    //console.log("Coordinate: " + x + " og " + y + " og " + $(window).height())
     
     if(openingOverlap && !passing) {
         console.log("passing");
@@ -58,27 +47,20 @@ document.onmousemove = function(e) {
         console.log(currentScreen)
     }
 
-
-    /*
-    if (y > $(window).height()/2) {
-        //console.log("under");
-        player.style.left = (x - 50) + "px";
-        player.style.top = ($(window).height()/2 - 50) + "px";
-        //player.style.top = ($(window).height() + "px")
-    } else if (y < $(window).height()/2) {
-        //console.log("top")
-        updatePosition();
-    }
-*/
-updatePosition();  
+updatePosition(currentScreen, e.clientY);  
 };
 
 
 console.log($(window).height()/2)
 
-function updatePosition() {
-    player.style.left = (x - 50) + "px";
-    player.style.top = (y - 50) + "px";
+function updatePosition(currentScreen, clientY) {
+
+    if((currentScreen == "top" && clientY < Math.round(($(window).height()/2))) || (currentScreen == "bottom" && clientY > Math.round(($(window).height()/2))) || passing) {
+        player.style.top = (y - 50) + "px";
+    } else {
+        player.style.top = (($(window).height()/2) - 50) + "px";
+    }
+    player.style.left = (x - 50) + "px"; 
 }
 
 
@@ -86,15 +68,12 @@ function updatePosition() {
 
 
 /*
-
     let vector = [(x2 + x1), (y2 + y1)];
     console.log("Vector: " + vector);
-
-
 
     let angle = Math.acos(vector[0] / vector[1]);
     console.log(angle);
 
-let hyp = Math.abs(vector[0], vector[1]);
-console.log("Hypothenus: " + hyp);
+    let hyp = Math.abs(vector[0], vector[1]);
+    console.log("Hypothenus: " + hyp);
 */
