@@ -9,36 +9,33 @@ let wall = document.getElementById("middlePart")
 
 let openingPos = (Math.random() * screen.width);
 
-//Creating the opening collision
-let openingCon = $('<div></div>');
+//Creating the opening Opening Colission
+let openingColConst = $('<div></div>');
+openingColConst.attr("class", "openingCol");
+openingColConst.css("width", ($(window).height()/6));
+openingColConst.css("left", openingPos - ($(window).height()/12));
+openingColConst.css("z-index", "2");
+openingColConst.css("border", "1px red solid");
+$("#screenSplits").append(openingColConst);
+let openingCol = document.getElementsByClassName("openingCol")[0];
+
+let openingViewConst = $('<div></div>');
+openingViewConst.attr("class", "openingView");
+openingViewConst.css("width", ($(window).height()/6 + player.width));
+openingViewConst.css("left", openingPos - ($(window).height()/12) - player.width/2);
+openingViewConst.css("z-index", "1");
+openingViewConst.css("background-color", "white");
+$("#screenSplits").append(openingViewConst);
+let openingView = document.getElementsByClassName("openingView")[0];
 
 
-/*
-let openingPos = (Math.random() * screen.width)
+function moveOpening() {
+    let newopeningPos = (Math.random() * screen.width);
+    openingCol.left = 1000;
+    openingView.left = 1000;
+}
 
-let openingCon = $('<div></div>');
-openingCon.attr("class", "opening");
-openingCon.css("left", openingPos);
-openingCon.css("z-index", "2");
-openingCon.css("border", "1px red solid");
 
-$("#screenSplits").append(openingCon);
-let opening = document.getElementsByClassName("opening")[0];
-
-//seperate visible hole to make passing feel better
-let openingViewCon = $('<div></div>');
-openingViewCon.css("background-color", "white");
-openingViewCon.attr("class", "openingView");
-openingViewCon.css("z-index", "1");
-openingViewCon.css("width", (opening.style.width + player.width*2));
-openingViewCon.css("left", openingPos - 50);
-$("#screenSplits").append(openingViewCon);
-
-//console.log(opening.style.width)
-//console.log(player.width)
-console.log(opening.width + player.width*2)
-console.log(1)
-*/
 let currentScreen = "top";
 let passing = false;
 
@@ -48,7 +45,7 @@ document.onmousemove = function(e) {
 
 
     const playerRect = player.getBoundingClientRect()
-    const openingRect = opening.getBoundingClientRect()
+    const openingRect = openingCol.getBoundingClientRect()
 
     const openingOverlap = !(
         playerRect.right < openingRect.left ||
@@ -88,7 +85,6 @@ function updatePosition(currentScreen, clientY) {
     }
     player.style.left = (x - player.width/2) + "px"; 
 }
-
 
 
 

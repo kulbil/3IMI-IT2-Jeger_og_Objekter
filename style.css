@@ -38,16 +38,10 @@ body {
     aspect-ratio: 1/1;
     width: 100px;
     position: absolute;
+    z-index: 3;
 }
 
-.opening {
-    height: 3vh;
-    width: 15vw;
-    position: absolute;
-    top: 48.40vh;
-}
-
-.openingView {
+.openingCol, .openingView {
     height: 3vh;
     position: absolute;
     top: 48.40vh;
