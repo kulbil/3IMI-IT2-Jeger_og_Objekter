@@ -4,16 +4,41 @@ let y = 0;
 var player = document.getElementById("player")
 let wall = document.getElementById("middlePart")
 
+
+//Opening creations
+
+let openingPos = (Math.random() * screen.width);
+
+//Creating the opening collision
+let openingCon = $('<div></div>');
+
+
+/*
+let openingPos = (Math.random() * screen.width)
+
 let openingCon = $('<div></div>');
 openingCon.attr("class", "opening");
-openingCon.css("left", (Math.random() * screen.width));
-openingCon.css("z-index", "1");
+openingCon.css("left", openingPos);
+openingCon.css("z-index", "2");
 openingCon.css("border", "1px red solid");
-openingCon.css("background-color", "white");
-$("#screenSplits").append(openingCon);
 
+$("#screenSplits").append(openingCon);
 let opening = document.getElementsByClassName("opening")[0];
 
+//seperate visible hole to make passing feel better
+let openingViewCon = $('<div></div>');
+openingViewCon.css("background-color", "white");
+openingViewCon.attr("class", "openingView");
+openingViewCon.css("z-index", "1");
+openingViewCon.css("width", (opening.style.width + player.width*2));
+openingViewCon.css("left", openingPos - 50);
+$("#screenSplits").append(openingViewCon);
+
+//console.log(opening.style.width)
+//console.log(player.width)
+console.log(opening.width + player.width*2)
+console.log(1)
+*/
 let currentScreen = "top";
 let passing = false;
 
@@ -31,7 +56,6 @@ document.onmousemove = function(e) {
         playerRect.bottom < openingRect.top ||
         playerRect.top > openingRect.bottom
     ) 
-    
     if(openingOverlap && !passing) {
         console.log("passing");
         passing = true;
@@ -50,17 +74,19 @@ document.onmousemove = function(e) {
 updatePosition(currentScreen, e.clientY);  
 };
 
-
-console.log($(window).height()/2)
-
 function updatePosition(currentScreen, clientY) {
 
-    if((currentScreen == "top" && clientY < Math.round(($(window).height()/2))) || (currentScreen == "bottom" && clientY > Math.round(($(window).height()/2))) || passing) {
-        player.style.top = (y - 50) + "px";
+    if((currentScreen == "top" && clientY < (Math.round(($(window).height()/2)) - player.width/2)) || (currentScreen == "bottom" && clientY > (Math.round(($(window).height()/2))) + player.width/2) || passing) {
+        player.style.top = (y - player.width/2) + "px";
     } else {
-        player.style.top = (($(window).height()/2) - 50) + "px";
+        if(currentScreen == "top") {
+            player.style.top = (($(window).height()/2) - player.width) + "px";
+        } else {
+            player.style.top = (($(window).height()/2)) + "px";
+
+        }
     }
-    player.style.left = (x - 50) + "px"; 
+    player.style.left = (x - player.width/2) + "px"; 
 }
 
 

@@ -44,5 +44,11 @@ body {
     height: 3vh;
     width: 15vw;
     position: absolute;
-    top: 48.25vh;
+    top: 48.40vh;
+}
+
+.openingView {
+    height: 3vh;
+    position: absolute;
+    top: 48.40vh;
 }
