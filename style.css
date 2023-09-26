@@ -19,7 +19,7 @@ body {
 }
 
 #topPart {
-
+    background-color: lightblue;
 }
 
 #middlePart {
@@ -28,6 +28,7 @@ body {
 }
 
 #bottomPart {
+    background-color: burlywood;
 
 }
 
@@ -45,4 +46,11 @@ body {
     height: 3vh;
     position: absolute;
     top: 48.40vh;
+}
+
+.targets {
+    position: absolute;
+    aspect-ratio: 1/1;
+    width: 10vh;
+    z-index: 1;
 }

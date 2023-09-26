@@ -4,7 +4,6 @@ let y = 0;
 var player = document.getElementById("player")
 let wall = document.getElementById("middlePart")
 
-
 //Opening creations
 
 let openingPos = (Math.random() * screen.width);
@@ -86,16 +85,55 @@ function updatePosition(currentScreen, clientY) {
     player.style.left = (x - player.width/2) + "px"; 
 }
 
+let spawnedTargets = [];
 
+let targetList = [
+    {
+        name: "Avocado", 
+        image: "images/avocado.png",
+        points: 3
+    },
+    {
+        name: "Banana", 
+        image: "images/banana.png",
+        points: 5
+    },
+    {  
+        name: "battery", 
+        image: "images/battery.png",
+        points: 10
+    }
+];
 
+function randomIntFromInterval(min, max) { // min and max included 
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
 
-/*
-    let vector = [(x2 + x1), (y2 + y1)];
-    console.log("Vector: " + vector);
+function createTarget(){
+    let rand = Math.floor(Math.random() * targetList.length);
+    let randLocX = Math.floor(Math.random() * ($(window).width()/2))
+    let randLocy = randomIntFromInterval(Math.floor(($(window).height()/2)), ($(window).height() - ($(window).height()/10)));
+    let randLoc = [randLocX, randLocy]
 
-    let angle = Math.acos(vector[0] / vector[1]);
-    console.log(angle);
+    let newTarget = new food(targetList[rand].name, targetList[rand].image, randLoc, targetList[rand].points);
 
-    let hyp = Math.abs(vector[0], vector[1]);
-    console.log("Hypothenus: " + hyp);
-*/
+    spawnedTargets.push(newTarget)
+}
+
+function spawnTargets() {
+    for(let i = 0; i < spawnedTargets.length; i++) {
+        let targetConst = $('<img></img>');
+        targetConst.css("left", spawnedTargets[i].location[0]);
+        targetConst.css("top", spawnedTargets[i].location[1]);
+        targetConst.attr("class", "targets");
+        targetConst.attr("src", spawnedTargets[i].image);
+        targetConst.attr("points", spawnedTargets[i].points);
+        $("#screenSplits").append(targetConst);
+        console.log(targetConst)
+    }
+}
+
+createTarget();
+createTarget();
+spawnTargets();
+
