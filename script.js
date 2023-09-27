@@ -3,6 +3,10 @@ let y = 0;
 
 var player = document.getElementById("player")
 let wall = document.getElementById("middlePart")
+let targets = document.getElementsByClassName("targets")
+
+let spawnedTargets = [];
+
 
 //Opening creations
 
@@ -34,6 +38,15 @@ function moveOpening() {
     openingView.left = 1000;
 }
 
+function getOverlapCheck(rect1, rect2) {
+    const overlap =!(
+        rect1.right < rect2.left ||
+        rect1.left > rect2.right ||
+        rect1.bottom < rect2.top ||
+        rect1.top > rect2.bottom
+    )
+    return overlap
+} 
 
 let currentScreen = "top";
 let passing = false;
@@ -52,6 +65,8 @@ document.onmousemove = function(e) {
         playerRect.bottom < openingRect.top ||
         playerRect.top > openingRect.bottom
     ) 
+
+
     if(openingOverlap && !passing) {
         console.log("passing");
         passing = true;
@@ -67,7 +82,7 @@ document.onmousemove = function(e) {
         console.log(currentScreen)
     }
 
-updatePosition(currentScreen, e.clientY);  
+    updatePosition(currentScreen, e.clientY);  
 };
 
 function updatePosition(currentScreen, clientY) {
@@ -82,10 +97,27 @@ function updatePosition(currentScreen, clientY) {
 
         }
     }
-    player.style.left = (x - player.width/2) + "px"; 
+    player.style.left = (x - player.width/2) + "px";
+
+
+    const playerRect = player.getBoundingClientRect()
+    for (i = 0; i < targets.length; i++) {
+        const targetRect = targets[i].getBoundingClientRect()
+        const targetOverlap = !(
+            playerRect.right < targetRect.left ||
+            playerRect.left > targetRect.right ||
+            playerRect.bottom < targetRect.top ||
+            playerRect.top > targetRect.bottom
+        ) 
+        if (targetOverlap) {
+            spawnedTargets[i] = null;
+            $(".targets").eq(i).remove();
+        } else {
+            console.log("not touching yet")
+        }
+    }
 }
 
-let spawnedTargets = [];
 
 let targetList = [
     {
