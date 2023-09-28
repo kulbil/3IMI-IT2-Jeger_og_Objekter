@@ -1,9 +1,14 @@
 let x = 0; 
 let y = 0; 
 
-var player = document.getElementById("player")
-let wall = document.getElementById("middlePart")
-let targets = document.getElementsByClassName("targets")
+var player = document.getElementById("player");
+let wall = document.getElementById("middlePart");
+let targets = document.getElementsByClassName("targets");
+let timer = document.getElementById("timer");
+let gameTimer = document.getElementById("gameTimer");
+let timerBar = document.getElementById("timerBar");
+let gameTimerBar = document.getElementById("gameTimerBar");
+let scoreCounter = document.getElementById("scoreCounter");
 
 let spawnedTargets = [];
 
@@ -11,32 +16,32 @@ let spawnedTargets = [];
 //Opening creations
 
 let openingPos = (Math.random() * screen.width);
-
-//Creating the opening Opening Colission
-let openingColConst = $('<div></div>');
-openingColConst.attr("class", "openingCol");
-openingColConst.css("width", ($(window).height()/6));
-openingColConst.css("left", openingPos - ($(window).height()/12));
-openingColConst.css("z-index", "2");
-openingColConst.css("border", "1px red solid");
-$("#screenSplits").append(openingColConst);
-let openingCol = document.getElementsByClassName("openingCol")[0];
-
-let openingViewConst = $('<div></div>');
-openingViewConst.attr("class", "openingView");
-openingViewConst.css("width", ($(window).height()/6 + player.width));
-openingViewConst.css("left", openingPos - ($(window).height()/12) - player.width/2);
-openingViewConst.css("z-index", "1");
-openingViewConst.css("background-color", "white");
-$("#screenSplits").append(openingViewConst);
-let openingView = document.getElementsByClassName("openingView")[0];
+let openingCol = "";
+let openingView = "";
+let openingStatus = "open";
 
 
-function moveOpening() {
-    let newopeningPos = (Math.random() * screen.width);
-    openingCol.left = 1000;
-    openingView.left = 1000;
+function createOpening() {
+    let openingColConst = $('<div></div>');
+    openingColConst.attr("class", "openingCol");
+    openingColConst.css("width", ($(window).height()/6));
+    openingColConst.css("left", openingPos - ($(window).height()/12));
+    openingColConst.css("z-index", "2");
+    openingColConst.css("border", "1px red solid");
+    $("#screenSplits").append(openingColConst);
+    openingCol = document.getElementsByClassName("openingCol")[0];
+    
+    let openingViewConst = $('<div></div>');
+    openingViewConst.attr("class", "openingView");
+    openingViewConst.css("width", ($(window).height()/6 + player.width));
+    openingViewConst.css("left", openingPos - ($(window).height()/12) - player.width/2);
+    openingViewConst.css("z-index", "1");
+    openingViewConst.css("background-color", "white");
+    $("#screenSplits").append(openingViewConst);
+    openingView = document.getElementsByClassName("openingView")[0];
 }
+
+
 
 function getOverlapCheck(rect1, rect2) {
     const overlap =!(
@@ -110,7 +115,8 @@ function updatePosition(currentScreen, clientY) {
             playerRect.top > targetRect.bottom
         ) 
         if (targetOverlap) {
-            spawnedTargets[i] = null;
+            scoreCounter.innerHTML++
+            spawnedTargets.splice(i, 1);
             $(".targets").eq(i).remove();
         } else {
             console.log("not touching yet")
@@ -161,11 +167,73 @@ function spawnTargets() {
         targetConst.attr("src", spawnedTargets[i].image);
         targetConst.attr("points", spawnedTargets[i].points);
         $("#screenSplits").append(targetConst);
-        console.log(targetConst)
     }
 }
 
+function playerLose() {
+    alert("You lose and you got: " + scoreCounter.innerHTML + " points");
+    scoreCounter.innerHTML = 0;
+    gameTimerCountDown = 98;
+    currentScreen = "top"
+}
+
+function playerWin() {
+    alert("You finished and you got: " + scoreCounter.innerHTML + " points");
+    scoreCounter.innerHTML = 0;
+    gameTimerCountDown = 98;
+    currentScreen = "top"
+}
+
+let timerCountDown = 98;
+function timerFunc() {
+    timerBar.style.width = timerCountDown + "%";
+    timerCountDown -= 1.5
+}
+
+let gameTimerCountDown = 98;
+function gameTimerFunc() {
+    gameTimerBar.style.width = gameTimerCountDown + "%";
+    gameTimerCountDown--
+    if (gameTimerCountDown < 0) {
+        clearInterval(gameTimerFunc)
+        playerWin()
+    }
+}
+
+function moveOpening() {
+    if (openingStatus == "open") {
+        openingPos  = Math.round(Math.random() * screen.width);
+
+        openingCol.style.left = openingPos + "px";
+        openingView.style.left = openingPos  - player.width/2 + "px";
+        spawnedTargets = [];
+        for (i = 0; i <= targets.length; i++) {
+            $(".targets").eq(0).remove();
+        }
+        $(".openingCol").eq(0).remove();
+        $(".openingView").eq(0).remove();
+        openingStatus = "closed";
+        timerCountDown = 98;
+        if(currentScreen == "bottom") {
+            playerLose()
+        }
+
+    } else if(openingStatus == "closed") {
+        createOpening();
+        createTarget();
+        createTarget();
+        spawnTargets();
+        console.log(spawnedTargets);
+        openingStatus = "open";
+        timerCountDown = 98;
+    }
+}
+
+scoreCounter.innerHTML = 0;
+setInterval(gameTimerFunc, 200)
+createOpening();
 createTarget();
 createTarget();
 spawnTargets();
-
+setInterval(timerFunc, 1)
+setInterval(moveOpening, 1000);

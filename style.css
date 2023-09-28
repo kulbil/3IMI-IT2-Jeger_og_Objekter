@@ -54,3 +54,47 @@ body {
     width: 10vh;
     z-index: 1;
 }
+
+#timer, #gameTimer {
+    position: absolute;
+    top: 14vh;
+    left: 2vh;
+    height: 10vh;
+    aspect-ratio: 5/1;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#gameTimer {
+    top: 2vh;
+    left: 2vh;  
+}
+
+#timerBar, #gameTimerBar {
+    height: 9vh;
+    width: 98%;
+    margin-left: 1%;
+    border-radius: 15px;
+    background-color: red;
+}
+
+#gameTimerBar {
+    background-color: blue;
+}
+
+#scoreCounter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 2vh;
+    right: 2vh;
+    background-color: white;
+    border-radius: 20px;
+    height: 10vh;
+    aspect-ratio: 1/1;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 250%;
+}
